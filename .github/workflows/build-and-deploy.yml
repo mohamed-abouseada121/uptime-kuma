@@ -28,7 +28,7 @@ jobs:
             # 2. Clone or Pull
             if [ ! -d "$TARGET_DIR" ]; then
               echo "Cloning repo for the first time..."
-              git clone https://github.com/mohamed-abouseada121/uptime-kuma.git $TARGET_DIR
+              git clone -b main --single-branch git@github.com:mohamed-abouseada121/uptime-kuma.git $TARGET_DIR
             else
               echo "Pulling latest changes..."
               cd $TARGET_DIR
