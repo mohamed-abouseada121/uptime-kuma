@@ -1,0 +1,56 @@
+name: Frontend Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Build Step
+        run: echo "Building frontend app..."
+
+      - name: Deploy to Server via SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # 1. Define safe directory (in user home)
+            TARGET_DIR="/home/${{ secrets.SERVER_USER }}/uptime-kuma"
+            
+            # 2. Clone or Pull
+            if [ ! -d "$TARGET_DIR" ]; then
+              echo "Cloning repo for the first time..."
+              git clone -b main --single-branch git@github.com:mohamed-abouseada121/uptime-kuma.git $TARGET_DIR
+            else
+              echo "Pulling latest changes..."
+              cd $TARGET_DIR
+              git pull origin main
+            fi
+
+            # 3. Operations
+            cd $TARGET_DIR
+            
+            # installing docker and compose plugin
+            echo "checking if docker installed..."
+            if ! command -v docker &> /dev/null
+            then
+            echo "Installing docker..."
+            chmod +x install_docker.sh && ./install_docker.sh && echo "install done successfuly"
+          
+            else
+                echo "Docker is installed"
+            fi
+
+
+            
+            # OR standard docker-compose:
+            docker-compose down || true
+            docker-compose up -d --build
