@@ -15,7 +15,7 @@ sudo echo "Types: deb
 URIs: https://download.docker.com/linux/ubuntu
 Suites: $(. /etc/os-release && echo "$VERSION_CODENAME")
 Components: stable
-Signed-By: /etc/apt/keyrings/docker.asc" >> /etc/apt/sources.list.d
+Signed-By: /etc/apt/keyrings/docker.asc" >> /etc/apt/sources.list.d//docker.sources
 
 sudo apt update -y
 sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
