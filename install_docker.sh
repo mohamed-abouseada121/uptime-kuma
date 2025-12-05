@@ -26,3 +26,4 @@ sudo docker --version
 sudo docker compose version
 
 sudo usermod -aG docker $USER
+newgrp docker
