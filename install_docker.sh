@@ -25,3 +25,4 @@ sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin d
 sudo docker --version
 sudo docker compose version
 
+sudo usermod -aG docker $USER
