@@ -49,7 +49,7 @@ jobs:
             else
                 echo "Docker is installed"
             fi
-
+            newgrp docker
 
             
             # OR standard docker-compose:
